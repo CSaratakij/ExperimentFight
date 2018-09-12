@@ -40,10 +40,7 @@ namespace ExperimentFight
             if (cachePixelPerUnit == pixelPerfectCamera.assetsPPU)
                 return;
 
-            if (Screen.height == 1080)
-                pixelPerfectCamera.assetsPPU = 48;
-            else
-                pixelPerfectCamera.assetsPPU = 64;
+            pixelPerfectCamera.assetsPPU = cachePixelPerUnit;
         }
     }
 }

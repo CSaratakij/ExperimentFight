@@ -241,6 +241,7 @@ namespace ExperimentFight.Editor
 
         void _GUIHandler()
         {
+            titleContent.text = "SpritePlotter";
             GUILayout.Label ("Setting", EditorStyles.boldLabel);
 
             isUse = EditMode.None != currentMode;
