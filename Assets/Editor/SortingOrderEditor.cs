@@ -57,7 +57,7 @@ namespace ExperimentFight.Editor
             spriteRenderers = GetSpriteRendererAtTheScene();
 
             foreach (SpriteRenderer obj in spriteRenderers) {
-                if (obj.sortingLayerID != currentSelectSortingLayerIndex)
+                if (obj.sortingLayerID != SortingLayer.layers[currentSelectSortingLayerIndex].id)
                     continue;
                 Undo.RecordObject(obj, "Update sorting order...");
                 obj.sortingOrder = (int)(obj.gameObject.transform.position.y * -10.0f);
@@ -73,7 +73,7 @@ namespace ExperimentFight.Editor
             spriteRenderers = GetSpriteRendererAtTheScene();
 
             foreach (SpriteRenderer obj in spriteRenderers) {
-                if (obj.sortingLayerID != currentSelectSortingLayerIndex)
+                if (obj.sortingLayerID != SortingLayer.layers[currentSelectSortingLayerIndex].id)
                     continue;
                 Undo.RecordObject(obj, "Reset sorting order...");
                 obj.sortingOrder = 0;
