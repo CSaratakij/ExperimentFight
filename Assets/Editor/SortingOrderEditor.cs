@@ -58,7 +58,7 @@ namespace ExperimentFight.Editor
                 if (obj.sortingLayerID != currentSelectSortingLayerIndex)
                     continue;
                 Undo.RecordObject(obj, "Update sorting order...");
-                obj.sortingOrder = (int)(obj.gameObject.transform.position.y * -10);
+                obj.sortingOrder = (int)(obj.gameObject.transform.position.y * -10.0f);
             }
         }
 

@@ -8,7 +8,7 @@ namespace ExperimentFight
 {
     public class HealthUIController : MonoBehaviour
     {
-        const string textHealthFormat = "H : {0}";
+        const string textHealthFormat = "Health : {0}";
 
         [SerializeField]
         Text txtHealth;
@@ -58,3 +58,4 @@ namespace ExperimentFight
         }
     }
 }
+
