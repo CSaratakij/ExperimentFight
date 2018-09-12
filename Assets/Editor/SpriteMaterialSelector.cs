@@ -9,6 +9,9 @@ namespace ExperimentFight.Editor
     public class SpriteMaterialSelector : EditorWindow
     {
         [SerializeField]
+        int currentSelectSortingLayerIndex = 0;
+
+        [SerializeField]
         Material material;
 
 
@@ -24,8 +27,18 @@ namespace ExperimentFight.Editor
         void OnGUI()
         {
             titleContent.text = "SpriteMaterialSelector";
+            string[] sortingLayerNames = new string[SortingLayer.layers.Length];
+
+            for (int i = 0; i < sortingLayerNames.Length; i++) {
+                int id = SortingLayer.layers[i].id;
+                sortingLayerNames[i] = SortingLayer.IDToName(id);
+            }
+
             GUILayout.Label ("Setting", EditorStyles.boldLabel);
-            
+            currentSelectSortingLayerIndex = EditorGUILayout.Popup("Target Layer", currentSelectSortingLayerIndex, sortingLayerNames);
+
+            EditorGUILayout.Space();
+
             material = (Material)EditorGUILayout.ObjectField(
                 new GUIContent(""),
                 material,
@@ -49,7 +62,15 @@ namespace ExperimentFight.Editor
             if (spriteRenderers.Length <= 0)
                 return;
 
+            bool isConfirm = EditorUtility.DisplayDialog("Apply SpriteRender's material", "Are you sure to apply a new material on selected layer?", "Yes", "No");
+
+            if (!isConfirm)
+                return;
+
             foreach (SpriteRenderer sprite in spriteRenderers) {
+                if (sprite.sortingLayerID != SortingLayer.layers[currentSelectSortingLayerIndex].id)
+                    continue;
+
                 Undo.RecordObject(sprite, "Apply sprite's material");
                 sprite.material = material;
             }
