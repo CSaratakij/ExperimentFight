@@ -36,7 +36,9 @@ namespace ExperimentFight.Editor
                 sortingLayerNames[i] = SortingLayer.IDToName(id);
             }
 
-            currentSelectSortingLayerIndex = EditorGUILayout.Popup("Layer", currentSelectSortingLayerIndex, sortingLayerNames);
+            GUILayout.Label ("Setting", EditorStyles.boldLabel);
+            currentSelectSortingLayerIndex = EditorGUILayout.Popup("Target Layer", currentSelectSortingLayerIndex, sortingLayerNames);
+
             EditorGUILayout.Space();
 
             if (GUILayout.Button("Update"))

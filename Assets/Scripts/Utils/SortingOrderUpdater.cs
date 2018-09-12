@@ -31,7 +31,7 @@ namespace ExperimentFight
         void UpdateSortingOrder()
         {
             oldSortingOrder = cacheSortingOrder;
-            cacheSortingOrder = (int)(transform.position.y * -10);
+            cacheSortingOrder = (int)(transform.position.y * -10.0f);
 
             if (cacheSortingOrder == oldSortingOrder)
                 return;
