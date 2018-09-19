@@ -83,41 +83,44 @@ namespace ExperimentFight.Editor
             }
 
             if (GUILayout.Button("Play"))
-            {
-                if (!EditorApplication.isPlayingOrWillChangePlaymode) {
+                _PlaySelectedScene();
+        }
 
-                    if (isUseBuildSetting) {
+        void _PlaySelectedScene()
+        {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) {
 
-                        if (EditorBuildSettings.scenes.Length > 0) {
+                if (isUseBuildSetting) {
 
-                            var path = EditorBuildSettings.scenes[0].path;
-                            var objExpectScene = (SceneAsset)AssetDatabase.LoadAssetAtPath(path, typeof(SceneAsset));
+                    if (EditorBuildSettings.scenes.Length > 0) {
 
-                            if (objExpectScene) {
-                                customMainScene = objExpectScene;
-                            }
-                            else {
-                                customMainScene = null;
-                                EditorUtility.DisplayDialog("Error", "Can't load the first scene in Build Setting.", "OK");
-                                isUseBuildSetting = false;
-                            }
+                        var path = EditorBuildSettings.scenes[0].path;
+                        var objExpectScene = (SceneAsset)AssetDatabase.LoadAssetAtPath(path, typeof(SceneAsset));
 
+                        if (objExpectScene) {
+                            customMainScene = objExpectScene;
                         }
                         else {
                             customMainScene = null;
-                            EditorUtility.DisplayDialog("Error", "No scene in Build Setting..", "OK");
+                            EditorUtility.DisplayDialog("Error", "Can't load the first scene in Build Setting.", "OK");
                             isUseBuildSetting = false;
                         }
-                    }
 
-                    if (customMainScene != null) {
-                        editModeScene = EditorSceneManager.GetActiveScene().path;
-                        EditorSceneManager.playModeStartScene = customMainScene;
-                        EditorApplication.isPlaying = true;
                     }
                     else {
-                        EditorUtility.DisplayDialog("Error", "No scene selected for playing.", "OK");
+                        customMainScene = null;
+                        EditorUtility.DisplayDialog("Error", "No scene in Build Setting..", "OK");
+                        isUseBuildSetting = false;
                     }
+                }
+
+                if (customMainScene != null) {
+                    editModeScene = EditorSceneManager.GetActiveScene().path;
+                    EditorSceneManager.playModeStartScene = customMainScene;
+                    EditorApplication.isPlaying = true;
+                }
+                else {
+                    EditorUtility.DisplayDialog("Error", "No scene selected for playing.", "OK");
                 }
             }
         }

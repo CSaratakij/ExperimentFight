@@ -11,9 +11,14 @@ namespace ExperimentFight
         float moveForce;
 
         [SerializeField]
+        float dashForce;
+
+        [SerializeField]
         [Range(0.0f, 1.0f)]
         float inputVectorDeadzone;
 
+
+        bool isDashing;
 
         Vector2 inputVector;
         Vector2 lastInputVector;
@@ -24,18 +29,20 @@ namespace ExperimentFight
         Animator anim;
         Rigidbody2D rigid;
         StockHealth stockHealth;
+        Timer timer;
 
 
         void Awake()
         {
             Initialize();
+            SubscribeEvents();
         }
 
         void Update()
         {
             //Test
-            if (Input.GetButtonDown("Jump"))
-                stockHealth.Remove(1);
+            /* if (Input.GetButtonDown("Jump")) */
+            /*     stockHealth.Remove(1); */
 
             InputHandler();
             AnimationHandler();
@@ -43,15 +50,25 @@ namespace ExperimentFight
 
         void FixedUpdate()
         {
-            MovementHandler();
+            if (isDashing)
+                DashHandler();
+            else
+                MovementHandler();
+        }
+
+        void OnDestroy()
+        {
+            UnsubscribeEvents();
         }
 
         void Initialize()
         {
+            isDashing = false;
+            inputVector = Vector2.zero;
             anim = GetComponent<Animator>();
             rigid = GetComponent<Rigidbody2D>();
             stockHealth = GetComponent<StockHealth>();
-            inputVector = Vector2.zero;
+            timer = GetComponent<Timer>();
         }
 
         void InputHandler()
@@ -59,6 +76,16 @@ namespace ExperimentFight
             if (stockHealth.IsEmpty) {
                 inputVector = Vector2.zero;
                 return;
+            }
+
+            if (isDashing)
+                return;
+
+            if (Input.GetButtonDown("Jump") && !isDashing) {
+                isDashing = true;
+                //Need fix
+                inputVector = lastInputVector; // if player is not moving input vector (0, 0) -> make this the facing vector
+                timer.CountDown();
             }
 
             inputVector.x = Input.GetAxisRaw("Horizontal");
@@ -130,6 +157,28 @@ namespace ExperimentFight
         {
             velocity = (moveForce * inputVector) * Time.fixedDeltaTime;
             rigid.velocity = velocity;
+        }
+
+        void DashHandler()
+        {
+            velocity = (dashForce * lastInputVector) * Time.fixedDeltaTime;
+            rigid.velocity = velocity;
+            //rigid.AddForce(velocity, ForceMode2D.Force);
+        }
+
+        void SubscribeEvents()
+        {
+            timer.OnStopped += OnTimerStopped;
+        }
+
+        void UnsubscribeEvents()
+        {
+            timer.OnStopped -= OnTimerStopped;
+        }
+
+        void OnTimerStopped()
+        {
+            isDashing = false;
         }
     }
 }

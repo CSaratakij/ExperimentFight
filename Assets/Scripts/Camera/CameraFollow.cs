@@ -25,7 +25,7 @@ namespace ExperimentFight
         {
             newPos = (target.position + offset);
             newPos = Vector3.Lerp(transform.position, newPos, interpolateAmount);
-            newPos.z = -10.0f;
+            newPos.z = transform.position.z;
             transform.position = newPos;
         }
 

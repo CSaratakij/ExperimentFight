@@ -24,8 +24,9 @@ GameObject:
   - component: {fileID: 95213585037824412}
   - component: {fileID: 61867939693927546}
   - component: {fileID: 114661020404591062}
-  - component: {fileID: 114905572024358678}
   - component: {fileID: 114351869997989880}
+  - component: {fileID: 114905572024358678}
+  - component: {fileID: 114369044953209628}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -122,6 +123,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   current: 4
   maximum: 4
+--- !u!114 &114369044953209628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1866661988052192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a1fde8e1037b34f85bc736d937b471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
+  current: 0.3
+  maximum: 0.3
 --- !u!114 &114661020404591062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,7 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540e6b3136098ee4cb59a33ecbf73ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 250
+  moveForce: 300
+  dashForce: 800
   inputVectorDeadzone: 0.1
 --- !u!212 &212557671958231938
 SpriteRenderer:
@@ -161,7 +177,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 74dfde93b8afbca4cbd8263b0b5fb9ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
