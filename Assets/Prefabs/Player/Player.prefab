@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114661020404591062}
   - component: {fileID: 114351869997989880}
   - component: {fileID: 114905572024358678}
+  - component: {fileID: 114832893738261056}
   - component: {fileID: 114369044953209628}
   m_Layer: 0
   m_Name: Player
@@ -135,8 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPause: 0
-  current: 0.3
-  maximum: 0.3
+  current: 0.2
+  maximum: 0.2
 --- !u!114 &114661020404591062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,6 +149,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf7450386ac9744d99080ae2aa0a312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114832893738261056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1866661988052192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a1fde8e1037b34f85bc736d937b471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
+  current: 0.35
+  maximum: 0.35
 --- !u!114 &114905572024358678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,8 +175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveForce: 300
-  dashForce: 800
+  dashForce: 950
   inputVectorDeadzone: 0.1
+  allowDashTimer: {fileID: 114832893738261056}
+  dashTimer: {fileID: 114369044953209628}
 --- !u!212 &212557671958231938
 SpriteRenderer:
   m_ObjectHideFlags: 1

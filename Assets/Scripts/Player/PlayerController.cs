@@ -17,7 +17,13 @@ namespace ExperimentFight
         [Range(0.0f, 1.0f)]
         float inputVectorDeadzone;
 
+        [SerializeField]
+        Timer allowDashTimer;
 
+        [SerializeField]
+        Timer dashTimer;
+
+        bool isAllowDash;
         bool isDashing;
 
         Vector2 inputVector;
@@ -29,7 +35,7 @@ namespace ExperimentFight
         Animator anim;
         Rigidbody2D rigid;
         StockHealth stockHealth;
-        Timer timer;
+
 
 
         void Awake()
@@ -40,10 +46,6 @@ namespace ExperimentFight
 
         void Update()
         {
-            //Test
-            /* if (Input.GetButtonDown("Jump")) */
-            /*     stockHealth.Remove(1); */
-
             InputHandler();
             AnimationHandler();
         }
@@ -63,12 +65,14 @@ namespace ExperimentFight
 
         void Initialize()
         {
+            isAllowDash = true;
             isDashing = false;
+
             inputVector = Vector2.zero;
             anim = GetComponent<Animator>();
+
             rigid = GetComponent<Rigidbody2D>();
             stockHealth = GetComponent<StockHealth>();
-            timer = GetComponent<Timer>();
         }
 
         void InputHandler()
@@ -81,11 +85,12 @@ namespace ExperimentFight
             if (isDashing)
                 return;
 
-            if (Input.GetButtonDown("Jump") && !isDashing) {
+            if (Input.GetButtonDown("Jump") && isAllowDash && !isDashing) {
+                isAllowDash = false;
                 isDashing = true;
                 //Need fix
                 inputVector = lastInputVector; // if player is not moving input vector (0, 0) -> make this the facing vector
-                timer.CountDown();
+                dashTimer.CountDown();
             }
 
             inputVector.x = Input.GetAxisRaw("Horizontal");
@@ -163,22 +168,29 @@ namespace ExperimentFight
         {
             velocity = (dashForce * lastInputVector) * Time.fixedDeltaTime;
             rigid.velocity = velocity;
-            //rigid.AddForce(velocity, ForceMode2D.Force);
         }
 
         void SubscribeEvents()
         {
-            timer.OnStopped += OnTimerStopped;
+            allowDashTimer.OnStopped += OnAllowDashTimer_Stopped;
+            dashTimer.OnStopped += OnDashTimer_Stopped;
         }
 
         void UnsubscribeEvents()
         {
-            timer.OnStopped -= OnTimerStopped;
+            allowDashTimer.OnStopped -= OnAllowDashTimer_Stopped;
+            dashTimer.OnStopped -= OnDashTimer_Stopped;
         }
 
-        void OnTimerStopped()
+        void OnAllowDashTimer_Stopped()
+        {
+            isAllowDash = true;
+        }
+
+        void OnDashTimer_Stopped()
         {
             isDashing = false;
+            allowDashTimer.CountDown();
         }
     }
 }
