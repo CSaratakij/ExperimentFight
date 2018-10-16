@@ -28,9 +28,9 @@ GameObject:
   - component: {fileID: 114905572024358678}
   - component: {fileID: 114832893738261056}
   - component: {fileID: 114369044953209628}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a663dd91c226388458309c2e70d44537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 4
+  current: 1
   maximum: 4
 --- !u!114 &114369044953209628
 MonoBehaviour:
