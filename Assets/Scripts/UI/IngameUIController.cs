@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace ExperimentFight
 {
@@ -15,6 +17,9 @@ namespace ExperimentFight
 
         [SerializeField]
         RectTransform[] menus;
+
+        [SerializeField]
+        Button btnResume;
 
 
         void Awake()
@@ -35,8 +40,20 @@ namespace ExperimentFight
 
         void InputHandler()
         {
-            if (Input.GetButtonDown("Cancel"))
+            bool isToggleShow = false;
+
+            if (GameController.gameState == GameState.Pause)
+                isToggleShow = Input.GetButtonDown("Cancel") || Input.GetButtonDown("PauseMenu");
+
+            else
+                isToggleShow = Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("PauseMenu");
+
+            if (isToggleShow)
+            {
                 TogglePanel(IngameMenu.PauseMenu);
+                EventSystem eventSystem = EventSystemInstance.instance.eventSystem;
+                EventSystemInstance.instance.eventSystem.SetSelectedGameObject(btnResume.gameObject, new BaseEventData(eventSystem));
+            }
         }
 
         void TogglePanel(IngameMenu menuType)
@@ -46,6 +63,8 @@ namespace ExperimentFight
 
             isShow = !isShow;
             ShowPanel(menuType, isShow);
+
+            GameController.gameState = isShow ? GameState.Pause : GameState.Normal;
         }
 
         void ShowPanel(IngameMenu menuType, bool value)
@@ -56,7 +75,14 @@ namespace ExperimentFight
                 return;
 
             menu.gameObject.SetActive(value);
+
             Time.timeScale = (!value) ? 1.0f : 0.0f;
+            GameController.gameState = (!value) ? GameState.Normal : GameState.Pause;
+        }
+
+        public void Hide()
+        {
+            ShowPanel(IngameMenu.PauseMenu, false);
         }
     }
 }

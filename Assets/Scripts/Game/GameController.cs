@@ -1,8 +1,9 @@
-﻿
-namespace ExperimentFight
+﻿namespace ExperimentFight
 {
     public class GameController
     {
+        public static GameState gameState = GameState.Normal;
+
         private static bool isGameStart = false;
         public static bool IsGameStart { get { return isGameStart; } }
 

@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,6 @@ namespace ExperimentFight
     {
         StockHealth health;
         Animator anim;
-
 
         void Awake()
         {
@@ -47,6 +45,12 @@ namespace ExperimentFight
             else
                 anim.Play("Damaged");
             */
+        }
+
+        public void DisableGameObject()
+        {
+            //call from animation...
+            gameObject.SetActive(false);
         }
     }
 }

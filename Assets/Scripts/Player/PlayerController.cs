@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,7 +36,6 @@ namespace ExperimentFight
         StockHealth stockHealth;
 
 
-
         void Awake()
         {
             Initialize();
@@ -73,10 +71,15 @@ namespace ExperimentFight
 
             rigid = GetComponent<Rigidbody2D>();
             stockHealth = GetComponent<StockHealth>();
+
+            lastInputVector = Vector2.down;
         }
 
         void InputHandler()
         {
+            if (GameController.gameState == GameState.Pause)
+                return;
+
             if (stockHealth.IsEmpty) {
                 inputVector = Vector2.zero;
                 return;
@@ -85,11 +88,10 @@ namespace ExperimentFight
             if (isDashing)
                 return;
 
-            if (Input.GetButtonDown("Jump") && isAllowDash && !isDashing) {
+            if (Input.GetButtonDown("Dash") && isAllowDash && !isDashing) {
                 isAllowDash = false;
                 isDashing = true;
-                //Need fix
-                inputVector = lastInputVector; // if player is not moving input vector (0, 0) -> make this the facing vector
+                inputVector = lastInputVector;
                 dashTimer.CountDown();
             }
 
