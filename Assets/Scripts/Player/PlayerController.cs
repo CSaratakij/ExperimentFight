@@ -31,7 +31,9 @@ namespace ExperimentFight
         Vector2 velocity;
         Vector2 moveVector;
 
+        SpriteRenderer spriteRenderer;
         Animator anim;
+
         Rigidbody2D rigid;
         StockHealth stockHealth;
 
@@ -67,6 +69,8 @@ namespace ExperimentFight
             isDashing = false;
 
             inputVector = Vector2.zero;
+
+            spriteRenderer = GetComponent<SpriteRenderer>();
             anim = GetComponent<Animator>();
 
             rigid = GetComponent<Rigidbody2D>();
@@ -92,12 +96,18 @@ namespace ExperimentFight
                 isAllowDash = false;
                 isDashing = true;
                 inputVector = lastInputVector;
+                spriteRenderer.color = Color.black;
                 dashTimer.CountDown();
             }
 
             inputVector.x = Input.GetAxisRaw("Horizontal");
             inputVector.y = Input.GetAxisRaw("Vertical");
 
+            InputProcessing();
+        }
+
+        void InputProcessing()
+        {
             if (inputVector.x > inputVectorDeadzone)
                 inputVector.x = 1.0f;
 
@@ -192,6 +202,7 @@ namespace ExperimentFight
         void OnDashTimer_Stopped()
         {
             isDashing = false;
+            spriteRenderer.color = Color.white;
             allowDashTimer.CountDown();
         }
     }
