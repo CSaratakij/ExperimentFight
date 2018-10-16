@@ -7,6 +7,10 @@ namespace ExperimentFight
     [RequireComponent(typeof(CollectableItem))]
     public class HealthKit : MonoBehaviour
     {
+        [SerializeField]
+        [Range(1, 4)]
+        int totalRestore = 1;
+
         CollectableItem item;
 
         void Awake()
@@ -30,9 +34,16 @@ namespace ExperimentFight
             item.OnCollectItem -= OnCollectItem;
         }
 
-        void OnCollectItem()
+        void OnCollectItem(GameObject collector)
         {
-            Debug.Log("Health is collect...");
+            if (!collector)
+            {
+                Debug.Log("Health kit is collect by an unknown collector!?");
+                return;
+            }
+
+            StockHealth health = collector.GetComponent<StockHealth>();
+            health.Restore(totalRestore);
         }
     }
 }

@@ -18,10 +18,14 @@ namespace ExperimentFight
         [SerializeField]
         Transform uiProgressPos;
 
-        public delegate void _Func();
+        public delegate void _Func(GameObject collector);
         public event _Func OnCollectItem;
 
+        GameObject collector = null;
+
         bool isDetectPlayer = false;
+        bool isUsed = false;
+
         float currentProgress = 0.0f;
 
 
@@ -37,6 +41,9 @@ namespace ExperimentFight
 
         void CollectItemHandler()
         {
+            if (isUsed)
+                return;
+
             if (!isDetectPlayer)
                 return;
 
@@ -74,8 +81,10 @@ namespace ExperimentFight
 
         void CollectItem()
         {
+            isUsed = true;
+
             if (OnCollectItem != null)
-                OnCollectItem();
+                OnCollectItem(collector);
 
             UIProgress.instance.SetProgress(0);
             UIProgress.instance.Show(false);
@@ -88,6 +97,7 @@ namespace ExperimentFight
             if (collision.CompareTag("Player"))
             {
                 isDetectPlayer = true;
+                collector = collision.gameObject;
                 UIProgress.instance.Show(true, uiProgressPos.position);
             }
         }
@@ -97,6 +107,7 @@ namespace ExperimentFight
             if (collision.CompareTag("Player"))
             {
                 isDetectPlayer = false;
+                collector = null;
                 UIProgress.instance.Show(false);
             }
         }
