@@ -36,7 +36,9 @@ namespace ExperimentFight
 
         bool isLockingOn;
         bool isAllowDash;
+
         bool isDashing;
+        bool isSlashing;
 
         Vector2 inputVector;
         Vector2 lastInputVector;
@@ -109,7 +111,7 @@ namespace ExperimentFight
             if (isDashing)
                 return;
 
-            if (Input.GetButtonDown("Dash") && isAllowDash && !isDashing) {
+            if (Input.GetButtonDown("Dash") && isAllowDash && !isDashing && !isSlashing) {
                 isAllowDash = false;
                 isDashing = true;
                 IsInvincible = true;
@@ -123,19 +125,18 @@ namespace ExperimentFight
 
             InputProcessing();
 
-            if (Input.GetButtonDown("Slash"))
-                melee.Slash();
-
             isLockingOn = Input.GetButton("LockOn");
 
             if (aimUI.gameObject.activeSelf != isLockingOn)
                 aimUI.gameObject.SetActive(isLockingOn);
 
-            if (!isLockingOn)
-                return;
-
-            if (Input.GetButtonDown("Shoot"))
+            if (isLockingOn && Input.GetButtonDown("Shoot"))
                 gun.Shoot(barrelOfGun.transform.up);
+
+            if (Input.GetButtonDown("Slash") && !isLockingOn)
+                melee.Slash();
+
+            isSlashing = !melee.IsAllowSlash;
         }
 
         void InputProcessing()
@@ -204,7 +205,7 @@ namespace ExperimentFight
 
         void MovementHandler()
         {
-            if (isLockingOn)
+            if (isLockingOn || isSlashing)
             {
                 rigid.velocity = Vector2.zero;
                 return;

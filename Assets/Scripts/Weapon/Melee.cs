@@ -13,6 +13,10 @@ namespace ExperimentFight
         int maxDetectHit;
 
         [SerializeField]
+        [Range(1, 3)]
+        int maxMeleeChain;
+
+        [SerializeField]
         Transform targetSlash;
 
         [SerializeField]
@@ -21,17 +25,25 @@ namespace ExperimentFight
         [SerializeField]
         LayerMask targetLayer;
 
+        [SerializeField]
+        Timer slashRateTimer;
+
+        [SerializeField]
+        Timer allowSlashTimer;
+
+        [SerializeField]
+        Timer frequentChainTimer;
+
 
         public bool IsAllowSlash { get { return isCanSlash; } }
 
         int totalHit;
-        bool isCanSlash = true;
+        int totalMeleeChain;
 
-        Timer timer;
+        bool isCanSlash = true;
         SpriteRenderer spriteRenderer;
 
         Collider2D[] hits;
-
         IEnemy enemy;
 
 #if UNITY_EDITOR
@@ -62,7 +74,6 @@ namespace ExperimentFight
         void Initialize()
         {
             hits = new Collider2D[maxDetectHit];
-            timer = GetComponent<Timer>();
             spriteRenderer = targetSlash.GetComponent<SpriteRenderer>();
         }
 
@@ -70,24 +81,45 @@ namespace ExperimentFight
         {
             isCanSlash = false;
             spriteRenderer.color = Color.gray;
+            totalMeleeChain += 1;
         }
 
         void OnTimerStop()
         {
             isCanSlash = true;
             spriteRenderer.color = Color.white;
+
+            if (totalMeleeChain >= maxMeleeChain)
+                allowSlashTimer.CountDown();
+        }
+
+        void OnAllowSlashTimerStop()
+        {
+            totalMeleeChain = 0;
+        }
+
+        void OnFrequentMeleeChainTimerStop()
+        {
+            if (totalMeleeChain < maxMeleeChain)
+                totalMeleeChain = 0;
         }
 
         void SubscribeEvents()
         {
-            timer.OnStarted += OnTimerStart;
-            timer.OnStopped += OnTimerStop;
+            slashRateTimer.OnStarted += OnTimerStart;
+            slashRateTimer.OnStopped += OnTimerStop;
+
+            allowSlashTimer.OnStopped += OnAllowSlashTimerStop;
+            frequentChainTimer.OnStopped += OnFrequentMeleeChainTimerStop;
         }
 
         void UnsubscribeEvents()
         {
-            timer.OnStarted -= OnTimerStart;
-            timer.OnStopped -= OnTimerStop;
+            slashRateTimer.OnStarted -= OnTimerStart;
+            slashRateTimer.OnStopped -= OnTimerStop;
+
+            allowSlashTimer.OnStopped -= OnAllowSlashTimerStop;
+            frequentChainTimer.OnStopped -= OnFrequentMeleeChainTimerStop;
         }
 
         public void Slash()
@@ -95,8 +127,13 @@ namespace ExperimentFight
             if (!isCanSlash)
                 return;
 
+            if (totalMeleeChain >= maxMeleeChain)
+                return;
+
             isCanSlash = false;
-            timer.CountDown();
+
+            slashRateTimer.CountDown();
+            frequentChainTimer.CountDown();
 
             if (totalHit <= 0)
                 return;
