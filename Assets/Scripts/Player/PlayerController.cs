@@ -26,6 +26,9 @@ namespace ExperimentFight
         [SerializeField]
         Transform barrelOfGun;
 
+        [SerializeField]
+        Transform aimUI;
+
         public bool IsInvincible { get; private set; }
 
         bool isLockingOn;
@@ -118,6 +121,9 @@ namespace ExperimentFight
             InputProcessing();
 
             isLockingOn = Input.GetButton("LockOn");
+
+            if (aimUI.gameObject.activeSelf != isLockingOn)
+                aimUI.gameObject.SetActive(isLockingOn);
 
             if (!isLockingOn)
                 return;

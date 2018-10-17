@@ -811,9 +811,10 @@ GameObject:
   - component: {fileID: 362736950}
   - component: {fileID: 362736951}
   - component: {fileID: 362736953}
+  - component: {fileID: 362736954}
   - component: {fileID: 362736952}
   m_Layer: 11
-  m_Name: Enemy
+  m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -936,9 +937,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 362736947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c78578ff9dcce1449b6612a09fbe6df3, type: 3}
+  m_Script: {fileID: 11500000, guid: 15a1fde8e1037b34f85bc736d937b471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPause: 0
+  current: 0.2
+  maximum: 0.2
 --- !u!114 &362736953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,8 +954,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a663dd91c226388458309c2e70d44537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 1
-  maximum: 1
+  current: 3
+  maximum: 3
+--- !u!114 &362736954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 362736947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9705a9d7cc9574aa47274601917a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &396652424
 GameObject:
   m_ObjectHideFlags: 0
