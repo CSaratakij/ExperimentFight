@@ -253,8 +253,11 @@ namespace ExperimentFight
             if (!collider)
                 return;
 
-            if (collider.CompareTag("Bullet"))
+            if (collider.CompareTag("EnemyBullet"))
+            {
                 stockHealth.Remove(1);
+                spriteRenderer.color = Color.red;
+            }
         }
     }
 }
