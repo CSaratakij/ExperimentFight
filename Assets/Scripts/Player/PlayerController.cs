@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ExperimentFight
 {
@@ -22,6 +20,15 @@ namespace ExperimentFight
         [SerializeField]
         Timer dashTimer;
 
+        [SerializeField]
+        Gun gun;
+
+        [SerializeField]
+        Transform barrelOfGun;
+
+        public bool IsInvincible { get; private set; }
+
+        bool isLockingOn;
         bool isAllowDash;
         bool isDashing;
 
@@ -37,7 +44,6 @@ namespace ExperimentFight
         Rigidbody2D rigid;
         StockHealth stockHealth;
 
-
         void Awake()
         {
             Initialize();
@@ -48,6 +54,11 @@ namespace ExperimentFight
         {
             InputHandler();
             AnimationHandler();
+        }
+
+        void LateUpdate()
+        {
+            ChangePositionOfGunBarrel(-lastInputVector);
         }
 
         void FixedUpdate()
@@ -95,8 +106,9 @@ namespace ExperimentFight
             if (Input.GetButtonDown("Dash") && isAllowDash && !isDashing) {
                 isAllowDash = false;
                 isDashing = true;
+                IsInvincible = true;
                 inputVector = lastInputVector;
-                spriteRenderer.color = Color.black;
+                spriteRenderer.color = Color.gray;
                 dashTimer.CountDown();
             }
 
@@ -104,6 +116,14 @@ namespace ExperimentFight
             inputVector.y = Input.GetAxisRaw("Vertical");
 
             InputProcessing();
+
+            isLockingOn = Input.GetButton("LockOn");
+
+            if (!isLockingOn)
+                return;
+
+            if (Input.GetButtonDown("Shoot"))
+                gun.Shoot(barrelOfGun.transform.up);
         }
 
         void InputProcessing()
@@ -172,6 +192,12 @@ namespace ExperimentFight
 
         void MovementHandler()
         {
+            if (isLockingOn)
+            {
+                rigid.velocity = Vector2.zero;
+                return;
+            }
+
             velocity = (moveForce * inputVector) * Time.fixedDeltaTime;
             rigid.velocity = velocity;
         }
@@ -180,6 +206,18 @@ namespace ExperimentFight
         {
             velocity = (dashForce * lastInputVector) * Time.fixedDeltaTime;
             rigid.velocity = velocity;
+        }
+
+        void ChangePositionOfGunBarrel(Vector2 direction)
+        {
+            Vector2 currentPos = transform.position;
+            Vector2 relativeVector = (currentPos + direction) - currentPos;
+
+            float angle = Mathf.Atan2(relativeVector.y, relativeVector.x);
+            float degreeAngle = angle * (180 / Mathf.PI);
+
+            degreeAngle += 90;
+            gun.transform.localEulerAngles = (Vector3.forward * degreeAngle);
         }
 
         void SubscribeEvents()
@@ -202,9 +240,21 @@ namespace ExperimentFight
         void OnDashTimer_Stopped()
         {
             isDashing = false;
+            IsInvincible = false;
             spriteRenderer.color = Color.white;
             allowDashTimer.CountDown();
         }
+
+        void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (IsInvincible)
+                return;
+
+            if (!collider)
+                return;
+
+            if (collider.CompareTag("Bullet"))
+                stockHealth.Remove(1);
+        }
     }
 }
-

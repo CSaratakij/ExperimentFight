@@ -11,6 +11,38 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1866661988052192}
   m_IsPrefabAsset: 1
+--- !u!1 &1169272210856922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4895592155238876}
+  - component: {fileID: 114083939895996896}
+  - component: {fileID: 114645723781631108}
+  m_Layer: 9
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1495454965436190
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4562641241071932}
+  m_Layer: 9
+  m_Name: barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1866661988052192
 GameObject:
   m_ObjectHideFlags: 0
@@ -23,6 +55,7 @@ GameObject:
   - component: {fileID: 50741189344069368}
   - component: {fileID: 95213585037824412}
   - component: {fileID: 61867939693927546}
+  - component: {fileID: 61498960561901486}
   - component: {fileID: 114661020404591062}
   - component: {fileID: 114351869997989880}
   - component: {fileID: 114905572024358678}
@@ -35,6 +68,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4562641241071932
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495454965436190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4895592155238876}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4594958251911836
 Transform:
   m_ObjectHideFlags: 1
@@ -44,8 +90,23 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4895592155238876}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4895592155238876
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169272210856922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.77, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children:
+  - {fileID: 4562641241071932}
+  m_Father: {fileID: 4594958251911836}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50741189344069368
@@ -68,6 +129,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!61 &61498960561901486
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1866661988052192}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.85856164}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.57396436, y: 1.2289631}
+  m_EdgeRadius: 0
 --- !u!61 &61867939693927546
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -111,6 +197,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114083939895996896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169272210856922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb14d72f87bf7740b827dad257066db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInfiniteClip: 0
+  bulletForce: 800
+  barrel: {fileID: 4562641241071932}
+  totalClip: 6
+  maxClip: 6
+  totalBulletPool: 10
+  bulletPrefab: {fileID: 1525654393192452, guid: ac9d783d15e20464095b3b07468b8751,
+    type: 2}
 --- !u!114 &114351869997989880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +243,20 @@ MonoBehaviour:
   isPause: 0
   current: 0.2
   maximum: 0.2
+--- !u!114 &114645723781631108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169272210856922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a1fde8e1037b34f85bc736d937b471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
+  current: 0.15
+  maximum: 0.15
 --- !u!114 &114661020404591062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,6 +298,8 @@ MonoBehaviour:
   inputVectorDeadzone: 0.1
   allowDashTimer: {fileID: 114832893738261056}
   dashTimer: {fileID: 114369044953209628}
+  gun: {fileID: 114083939895996896}
+  barrelOfGun: {fileID: 4562641241071932}
 --- !u!212 &212557671958231938
 SpriteRenderer:
   m_ObjectHideFlags: 1

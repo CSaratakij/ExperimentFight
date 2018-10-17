@@ -1,0 +1,10 @@
+{
+    "name": "Game",
+    "references": [
+        "Unity.2D.PixelPerfect"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
