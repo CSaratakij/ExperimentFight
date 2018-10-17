@@ -2,7 +2,7 @@
 
 namespace ExperimentFight
 {
-    public class Slime : MonoBehaviour
+    public class Slime : MonoBehaviour, IEnemy
     {
         bool isCanMove = true;
 
@@ -81,6 +81,11 @@ namespace ExperimentFight
         {
             timer.OnStarted -= OnTimerStart;
             timer.OnStopped -= OnTimerStop;
+        }
+
+        public void GetHit()
+        {
+            timer.CountDown();
         }
     }
 }

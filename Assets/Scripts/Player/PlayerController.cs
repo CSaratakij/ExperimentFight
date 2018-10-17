@@ -29,6 +29,9 @@ namespace ExperimentFight
         [SerializeField]
         Transform aimUI;
 
+        [SerializeField]
+        Melee melee;
+
         public bool IsInvincible { get; private set; }
 
         bool isLockingOn;
@@ -119,6 +122,9 @@ namespace ExperimentFight
             inputVector.y = Input.GetAxisRaw("Vertical");
 
             InputProcessing();
+
+            if (Input.GetButtonDown("Slash"))
+                melee.Slash();
 
             isLockingOn = Input.GetButton("LockOn");
 
@@ -223,7 +229,9 @@ namespace ExperimentFight
             float degreeAngle = angle * (180 / Mathf.PI);
 
             degreeAngle += 90;
+
             gun.transform.localEulerAngles = (Vector3.forward * degreeAngle);
+            melee.transform.localEulerAngles = (Vector3.forward * degreeAngle);
         }
 
         void SubscribeEvents()
