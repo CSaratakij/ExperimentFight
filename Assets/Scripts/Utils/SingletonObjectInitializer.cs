@@ -6,6 +6,8 @@ namespace ExperimentFight
 {
     public class SingletonObjectInitializer : MonoBehaviour
     {
+        public static SingletonObjectInitializer instance = null;
+
         [SerializeField]
         GameObject[] instances;
 
@@ -16,6 +18,16 @@ namespace ExperimentFight
 
         void MakeSingleton()
         {
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
             foreach (GameObject obj in instances)
             {
                 DontDestroyOnLoad(obj);

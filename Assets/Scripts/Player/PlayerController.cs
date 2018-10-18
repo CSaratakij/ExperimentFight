@@ -43,7 +43,8 @@ namespace ExperimentFight
         bool isDashing;
         bool isSlashing;
 
-        bool isStunt;
+        //Hacks
+        bool isStunt = true;
 
         Vector2 inputVector;
         Vector2 lastInputVector;
@@ -110,6 +111,9 @@ namespace ExperimentFight
 
             if (stockHealth.IsEmpty) {
                 inputVector = Vector2.zero;
+
+                //Hacks
+                GameController.GameStop();
                 return;
             }
 
@@ -243,6 +247,9 @@ namespace ExperimentFight
 
         void SubscribeEvents()
         {
+            GameController.OnGameStart += OnGameStart;
+            GameController.OnGameOver += OnGameOver;
+
             allowDashTimer.OnStopped += OnAllowDashTimer_Stopped;
             dashTimer.OnStopped += OnDashTimer_Stopped;
 
@@ -252,11 +259,26 @@ namespace ExperimentFight
 
         void UnsubscribeEvents()
         {
+            GameController.OnGameStart -= OnGameStart;
+            GameController.OnGameOver -= OnGameOver;
+
             allowDashTimer.OnStopped -= OnAllowDashTimer_Stopped;
             dashTimer.OnStopped -= OnDashTimer_Stopped;
 
             hitTimer.OnStarted -= OnHitTimer_Start;
             hitTimer.OnStopped -= OnHitTimer_Stopped;
+        }
+
+        void OnGameStart()
+        {
+            //Hacks
+            isStunt = false;
+        }
+
+        void OnGameOver()
+        {
+            //Hacks
+            isStunt = true;
         }
 
         void OnAllowDashTimer_Stopped()
