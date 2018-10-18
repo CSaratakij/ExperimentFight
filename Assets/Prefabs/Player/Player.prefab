@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 114905572024358678}
   - component: {fileID: 114832893738261056}
   - component: {fileID: 114369044953209628}
+  - component: {fileID: 114047263049504790}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -290,6 +291,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114047263049504790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1866661988052192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a1fde8e1037b34f85bc736d937b471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
+  current: 0.2
+  maximum: 0.2
 --- !u!114 &114080949168328012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInfiniteClip: 1
-  bulletForce: 800
+  bulletForce: 900
   barrel: {fileID: 4562641241071932}
   totalClip: 8
   maxClip: 8
@@ -334,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a663dd91c226388458309c2e70d44537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 1
+  current: 4
   maximum: 4
 --- !u!114 &114369044953209628
 MonoBehaviour:
@@ -362,8 +377,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPause: 0
-  current: 0.55
-  maximum: 0.55
+  current: 0.59
+  maximum: 0.59
 --- !u!114 &114565713753646586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,8 +405,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPause: 0
-  current: 0.15
-  maximum: 0.15
+  current: 0.2
+  maximum: 0.2
 --- !u!114 &114661020404591062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -428,11 +443,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540e6b3136098ee4cb59a33ecbf73ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 300
+  moveForce: 350
   dashForce: 950
   inputVectorDeadzone: 0.1
   allowDashTimer: {fileID: 114832893738261056}
   dashTimer: {fileID: 114369044953209628}
+  hitTimer: {fileID: 114047263049504790}
   gun: {fileID: 114083939895996896}
   barrelOfGun: {fileID: 4562641241071932}
   aimUI: {fileID: 4523530345088562}

@@ -2,7 +2,7 @@
 
 namespace ExperimentFight
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPlayer
     {
         [SerializeField]
         float moveForce;
@@ -19,6 +19,9 @@ namespace ExperimentFight
 
         [SerializeField]
         Timer dashTimer;
+
+        [SerializeField]
+        Timer hitTimer;
 
         [SerializeField]
         Gun gun;
@@ -39,6 +42,8 @@ namespace ExperimentFight
 
         bool isDashing;
         bool isSlashing;
+
+        bool isStunt;
 
         Vector2 inputVector;
         Vector2 lastInputVector;
@@ -111,7 +116,7 @@ namespace ExperimentFight
             if (isDashing)
                 return;
 
-            if (Input.GetButtonDown("Dash") && isAllowDash && !isDashing && !isSlashing) {
+            if (Input.GetButtonDown("Dash") && isAllowDash && !isDashing && !isSlashing && !isStunt) {
                 isAllowDash = false;
                 isDashing = true;
                 IsInvincible = true;
@@ -170,6 +175,7 @@ namespace ExperimentFight
         {
             if (stockHealth.IsEmpty) {
                 anim.Play("Dead");
+                gameObject.SetActive(false);
                 return;
             }
 
@@ -205,7 +211,7 @@ namespace ExperimentFight
 
         void MovementHandler()
         {
-            if (isLockingOn || isSlashing)
+            if (isLockingOn || isSlashing || isStunt)
             {
                 rigid.velocity = Vector2.zero;
                 return;
@@ -239,12 +245,18 @@ namespace ExperimentFight
         {
             allowDashTimer.OnStopped += OnAllowDashTimer_Stopped;
             dashTimer.OnStopped += OnDashTimer_Stopped;
+
+            hitTimer.OnStarted += OnHitTimer_Start;
+            hitTimer.OnStopped += OnHitTimer_Stopped;
         }
 
         void UnsubscribeEvents()
         {
             allowDashTimer.OnStopped -= OnAllowDashTimer_Stopped;
             dashTimer.OnStopped -= OnDashTimer_Stopped;
+
+            hitTimer.OnStarted -= OnHitTimer_Start;
+            hitTimer.OnStopped -= OnHitTimer_Stopped;
         }
 
         void OnAllowDashTimer_Stopped()
@@ -260,6 +272,17 @@ namespace ExperimentFight
             allowDashTimer.CountDown();
         }
 
+        void OnHitTimer_Start()
+        {
+            spriteRenderer.color = Color.red;
+        }
+
+        void OnHitTimer_Stopped()
+        {
+            isStunt = false;
+            spriteRenderer.color = Color.white;
+        }
+
         void OnTriggerEnter2D(Collider2D collider)
         {
             if (IsInvincible)
@@ -273,6 +296,18 @@ namespace ExperimentFight
                 stockHealth.Remove(1);
                 spriteRenderer.color = Color.red;
             }
+        }
+
+        public void GetHit()
+        {
+            if (IsInvincible || isStunt)
+                return;
+
+            stockHealth.Remove(1);
+            isStunt = true;
+
+            hitTimer.Stop();
+            hitTimer.CountDown();
         }
     }
 }
