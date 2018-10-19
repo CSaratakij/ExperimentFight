@@ -29,6 +29,8 @@ namespace ExperimentFight
         void OnDisable()
         {
             isUsed = false;
+            isDetectPlayer = false;
+            collector = null;
             currentProgress = 0.0f;
         }
 

@@ -75,7 +75,12 @@ namespace ExperimentFight
         void LateUpdate()
         {
             if (GamepadWatcher.isGamepadConnected)
-                ChangePositionOfGunBarrel(-lastInputVector);
+            {
+                if (aimVector.magnitude < 0.2f)
+                    ChangePositionOfGunBarrel(-lastInputVector);
+                else
+                    ChangePositionOfGunBarrel(-aimVector);
+            }
             else
             {
                 if (isLockingOn)
