@@ -23,6 +23,9 @@ namespace ExperimentFight
         [SerializeField]
         Button btnStart;
 
+        [SerializeField]
+        Text lblMenu;
+
         void Awake()
         {
             Initialize();
@@ -71,6 +74,7 @@ namespace ExperimentFight
 
         void OnGameOver()
         {
+            lblMenu.text = "GameOver";
             ShowPanel(IngameMenu.PauseMenu, true);
         }
 
