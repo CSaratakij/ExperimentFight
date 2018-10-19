@@ -49,6 +49,9 @@ namespace ExperimentFight
 
         void Update()
         {
+            if (!GameController.IsGameStart)
+                return;
+
             if (isShowNextWaveGate)
                 return;
 
