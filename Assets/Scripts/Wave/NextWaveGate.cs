@@ -2,12 +2,10 @@
 
 namespace ExperimentFight
 {
-    [RequireComponent(typeof(CollectableItem))]
-    public class HealthKit : MonoBehaviour
+    public class NextWaveGate : MonoBehaviour
     {
         [SerializeField]
-        [Range(1, 4)]
-        int totalRestore = 1;
+        WaveController waveController;
 
         CollectableItem item;
 
@@ -36,12 +34,11 @@ namespace ExperimentFight
         {
             if (!collector)
             {
-                Debug.Log("Health kit is collect by an unknown collector!?");
+                Debug.Log("Next Wave Gate is enter by an unknown!?");
                 return;
             }
 
-            StockHealth health = collector.GetComponent<StockHealth>();
-            health.Restore(totalRestore);
+            waveController.NextWave();
         }
     }
 }

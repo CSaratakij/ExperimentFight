@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ExperimentFight
 {
@@ -28,6 +26,11 @@ namespace ExperimentFight
 
         float currentProgress = 0.0f;
 
+        void OnDisable()
+        {
+            isUsed = false;
+            currentProgress = 0.0f;
+        }
 
         void OnDestroy()
         {

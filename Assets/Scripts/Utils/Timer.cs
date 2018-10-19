@@ -79,6 +79,13 @@ namespace ExperimentFight
             _FireEvent_OnStopped();
         }
 
+        public void Reset()
+        {
+            current = maximum;
+            isStart = false;
+            isPause = false;
+        }
+
         void _FireEvent_OnStarted()
         {
             if (OnStarted != null)
