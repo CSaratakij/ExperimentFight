@@ -357,6 +357,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1013639173}
   m_Script: {fileID: 11500000, guid: 50b08cdf70a4af84e988953b2d0012ab, type: 3}
+--- !u!114 &496042448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114175464058253966, guid: 576362e3317db5c4c8b20d1b1c50c584,
+    type: 2}
+  m_PrefabInternal: {fileID: 1013639173}
+  m_Script: {fileID: 11500000, guid: 15a1fde8e1037b34f85bc736d937b471, type: 3}
 --- !u!1001 &523589902
 Prefab:
   m_ObjectHideFlags: 0
@@ -454,6 +460,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114872315366791224, guid: dcff74922288262438018e887b43a478,
+        type: 2}
+      propertyPath: waveController
+      value: 
+      objectReference: {fileID: 496042447}
+    - target: {fileID: 114872315366791224, guid: dcff74922288262438018e887b43a478,
+        type: 2}
+      propertyPath: waveTimer
+      value: 
+      objectReference: {fileID: 496042448}
     - target: {fileID: 114501553198724444, guid: dcff74922288262438018e887b43a478,
         type: 2}
       propertyPath: stockHealth
