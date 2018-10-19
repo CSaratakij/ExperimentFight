@@ -49,6 +49,8 @@ namespace ExperimentFight
         Vector2 inputVector;
         Vector2 lastInputVector;
 
+        Vector2 aimVector;
+
         Vector2 velocity;
         Vector2 moveVector;
 
@@ -72,7 +74,15 @@ namespace ExperimentFight
 
         void LateUpdate()
         {
-            ChangePositionOfGunBarrel(-lastInputVector);
+            if (GamepadWatcher.isGamepadConnected)
+                ChangePositionOfGunBarrel(-lastInputVector);
+            else
+            {
+                if (isLockingOn)
+                    ChangePositionOfGunBarrel(aimVector);
+                else
+                    ChangePositionOfGunBarrel(-lastInputVector);
+            }
         }
 
         void FixedUpdate()
@@ -131,6 +141,20 @@ namespace ExperimentFight
 
             inputVector.x = Input.GetAxisRaw("Horizontal");
             inputVector.y = Input.GetAxisRaw("Vertical");
+
+            if (GamepadWatcher.isGamepadConnected)
+            {
+                aimVector.x = Input.GetAxisRaw("Horizontal");
+                aimVector.y = Input.GetAxisRaw("Vertical");
+            }
+            else
+            {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 direction = mousePos - transform.position;
+
+                aimVector = -direction;
+                //screen to world point and its - transform.position;
+            }
 
             InputProcessing();
 
