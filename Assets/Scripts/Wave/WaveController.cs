@@ -21,14 +21,19 @@ namespace ExperimentFight
         [SerializeField]
         Transform[] possibleEnemySpawnPoints;
 
+        [SerializeField]
+        int maxSpawn = 10;
+
+        [SerializeField]
+        int increaseSpawnStep = 2;
+
 
         Timer timer;
 
         bool isCanNextWave = false;
         bool isShowNextWaveGate = false;
 
-        //Test..
-        int currentSpawn = 4;
+        int currentSpawn;
         GameObject[] enemies;
 
 
@@ -37,8 +42,8 @@ namespace ExperimentFight
             timer = GetComponent<Timer>();
             CurrentWave = 0;
 
-            enemies = new GameObject[currentSpawn];
-            for (int i = 0; i < currentSpawn; ++i)
+            enemies = new GameObject[maxSpawn];
+            for (int i = 0; i < maxSpawn; ++i)
             {
                 enemies[i] = Instantiate(enemyPrefab) as GameObject;
                 enemies[i].SetActive(false);
@@ -57,14 +62,12 @@ namespace ExperimentFight
 
             int deadCount = 0;
 
-            foreach (GameObject enemy in enemies)
+            for (int i = 0; i < currentSpawn; ++i)
             {
-                if (enemy.activeSelf)
+                if (enemies[i].activeSelf)
                     continue;
                 else
-                {
                     deadCount += 1;
-                }
             }
 
             if (deadCount == currentSpawn)
@@ -122,9 +125,9 @@ namespace ExperimentFight
                 enemies[i].transform.position = possibleEnemySpawnPoints[i].position;
             }
 
-            foreach (GameObject enemy in enemies)
+            for (int i = 0; i < currentSpawn; ++i)
             {
-                enemy.SetActive(true);
+                enemies[i].SetActive(true);
             }
         }
 
@@ -143,6 +146,9 @@ namespace ExperimentFight
 
             isShowNextWaveGate = false;
             nextWaveGate.SetActive(false);
+
+            if (currentSpawn < maxSpawn)
+                currentSpawn += increaseSpawnStep;
 
             ActivateAllEnemy();
             timer.CountDown();
